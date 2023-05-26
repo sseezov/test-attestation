@@ -1,6 +1,5 @@
 export default function solution(content){
   const data = content.split("\n").slice(1, -1);
-  // console.log(content.split("\n"));
 
   const dataLength = data.length;
   console.log(`Count: ${dataLength}`);
@@ -18,13 +17,8 @@ export default function solution(content){
 
   const temps = data.reduce((acc, value) => {
     const city = value.split(',');
-    if (acc[city[7]]) {
-      acc[city[7]].push(city[1]);
-      return acc;
-    } else {
-      acc[city[7]] = [city[1]];
-      return acc;
-    }
+    acc[city[7]] = [...(acc[city[7]] ?? []), city[1]];
+    return acc;
   }, {});
   const averageTemps = Object.entries(temps).map(item => [item[0], item[1].reduce((acc, value) => Number(value) + acc, 0) / 4]);
   const maxAverageTemp = [...averageTemps].sort((a, b) => b[1] - a[1]);
